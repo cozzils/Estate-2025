@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pianificatore Estate 2025</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .legend {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.3em;
+        }
+
+        .legend p {
+            margin: 8px 0;
+            color: #34495e;
+            line-height: 1.5;
+        }
+
+        .x-example {
+            background: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 0 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .date-header {
+            min-width: 120px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        .person-header {
+            min-width: 80px;
+        }
+
+        .free-header {
+            min-width: 70px;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 0.9em;
+        }
+
+        .date-cell {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            text-align: left;
+            padding-left: 15px;
+            min-width: 120px;
+        }
+
+        .weekend {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .person-cell {
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .person-cell:hover {
+            background: #ecf0f1;
+            transform: scale(1.05);
+        }
+
+        .person-cell.marked {
+            background: #e74c3c;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .free-cell {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .month-separator {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.2em;
+        }
+
+        .day-name {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            display: block;
+        }
+
+        .day-number {
+            font-size: 1.1em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .stats {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stats h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 10px;
+            }
+            
+            table {
+                font-size: 0.8em;
+            }
+            
+            th, td {
+                padding: 8px 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌞 Pianificatore Estate 2025 🌞</h1>
+        <p class="subtitle">Organizzazione gruppo • 29 Maggio - 8 Settembre 2025</p>
+        
+        <div class="legend">
+            <h3>📋 Come usare questa tabella:</h3>
+            <p>• <strong>Scopo:</strong> Organizzare le disponibilità del gruppo per tutta l'estate</p>
+            <p>• <strong>Come segnare:</strong> Clicca su una cella per inserire una <span class="x-example">X</span> rossa quando sei impegnato/a</p>
+            <p>• <strong>Colonna "Liberi":</strong> Mostra automaticamente quante persone sono libere ogni giorno</p>
+            <p>• <strong>Giorni del weekend:</strong> Evidenziati con sfondo arancione</p>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button class="export-btn" onclick="exportToCSV()">📊 Esporta CSV</button>
+            <button class="export-btn" onclick="printTable()">🖨️ Stampa</button>
+        </div>
+
+        <table id="plannerTable">
+            <thead>
+                <tr>
+                    <th class="date-header">Data</th>
+                    <th class="person-header">Luca</th>
+                    <th class="person-header">Cozzi</th>
+                    <th class="person-header">Marta</th>
+                    <th class="person-header">Giulia</th>
+                    <th class="person-header">Andreea</th>
+                    <th class="person-header">Arianna</th>
+                    <th class="person-header">Victor</th>
+                    <th class="person-header">Alberto</th>
+                    <th class="free-header">Liberi</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+
+        <div class="stats">
+            <h3>📊 Statistiche Estate</h3>
+            <p id="totalDays"></p>
+            <p id="weekendDays"></p>
+            <p id="avgFree"></p>
+        </div>
+    </div>
+
+    <script>
+        const people = ['Luca', 'Cozzi', 'Marta', 'Giulia', 'Andreea', 'Arianna', 'Victor', 'Alberto'];
+        const startDate = new Date(2025, 4, 29); // 29 maggio 2025
+        const endDate = new Date(2025, 8, 8); // 8 settembre 2025
+        const dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+        const monthNames = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 
+                           'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+
+        let availability = {};
+
+        function generateTable() {
+            const tableBody = document.getElementById('tableBody');
+            let currentDate = new Date(startDate);
+            let currentMonth = -1;
+            let totalDays = 0;
+            let weekendDays = 0;
+
+            while (currentDate <= endDate) {
+                // Add month separator
+                if (currentDate.getMonth() !== currentMonth) {
+                    currentMonth = currentDate.getMonth();
+                    const monthRow = document.createElement('tr');
+                    monthRow.innerHTML = `<td colspan="10" class="month-separator">📅 ${monthNames[currentMonth]} ${currentDate.getFullYear()}</td>`;
+                    tableBody.appendChild(monthRow);
+                }
+
+                const row = document.createElement('tr');
+                const dateKey = formatDateKey(currentDate);
+                const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
+                
+                if (isWeekend) {
+                    row.classList.add('weekend');
+                    weekendDays++;
+                }
+                
+                totalDays++;
+
+                // Date cell
+                const dateCell = document.createElement('td');
+                dateCell.className = 'date-cell';
+                dateCell.innerHTML = `
+                    <span class="day-name">${dayNames[currentDate.getDay()]}</span>
+                    <span class="day-number">${currentDate.getDate()}/${currentDate.getMonth() + 1}</span>
+                `;
+                row.appendChild(dateCell);
+
+                // Initialize availability for this date
+                if (!availability[dateKey]) {
+                    availability[dateKey] = {};
+                }
+
+                // Person cells
+                people.forEach(person => {
+                    const cell = document.createElement('td');
+                    cell.className = 'person-cell';
+                    cell.dataset.date = dateKey;
+                    cell.dataset.person = person;
+                    cell.onclick = () => toggleAvailability(cell, dateKey, person);
+                    
+                    if (availability[dateKey][person]) {
+                        cell.classList.add('marked');
+                        cell.textContent = 'X';
+                    }
+                    
+                    row.appendChild(cell);
+                });
+
+                // Free count cell
+                const freeCell = document.createElement('td');
+                freeCell.className = 'free-cell';
+                freeCell.id = `free-${dateKey}`;
+                row.appendChild(freeCell);
+
+                tableBody.appendChild(row);
+                
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+
+            updateAllFreeCounts();
+            updateStats(totalDays, weekendDays);
+        }
+
+        function formatDateKey(date) {
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        function toggleAvailability(cell, dateKey, person) {
+            if (availability[dateKey][person]) {
+                // Remove X
+                availability[dateKey][person] = false;
+                cell.classList.remove('marked');
+                cell.textContent = '';
+            } else {
+                // Add X
+                availability[dateKey][person] = true;
+                cell.classList.add('marked');
+                cell.textContent = 'X';
+            }
+            
+            updateFreeCount(dateKey);
+        }
+
+        function updateFreeCount(dateKey) {
+            const busyCount = people.reduce((count, person) => {
+                return count + (availability[dateKey][person] ? 1 : 0);
+            }, 0);
+            
+            const freeCount = people.length - busyCount;
+            const freeCell = document.getElementById(`free-${dateKey}`);
+            if (freeCell) {
+                freeCell.textContent = freeCount;
+                
+                // Color coding based on availability
+                if (freeCount === people.length) {
+                    freeCell.style.background = 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)';
+                    freeCell.style.color = 'white';
+                } else if (freeCount >= people.length / 2) {
+                    freeCell.style.background = 'linear-gradient(135deg, #f39c12 0%, #e67e22 100%)';
+                    freeCell.style.color = 'white';
+                } else {
+                    freeCell.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
+                    freeCell.style.color = 'white';
+                }
+            }
+        }
+
+        function updateAllFreeCounts() {
+            Object.keys(availability).forEach(dateKey => {
+                updateFreeCount(dateKey);
+            });
+        }
+
+        function updateStats(totalDays, weekendDays) {
+            document.getElementById('totalDays').textContent = `📅 Giorni totali monitorati: ${totalDays}`;
+            document.getElementById('weekendDays').textContent = `🏖️ Weekend inclusi: ${weekendDays}`;
+            
+            // Calculate average free people
+            const avgFree = Object.keys(availability).reduce((sum, dateKey) => {
+                const busyCount = people.reduce((count, person) => {
+                    return count + (availability[dateKey][person] ? 1 : 0);
+                }, 0);
+                return sum + (people.length - busyCount);
+            }, 0) / Object.keys(availability).length;
+            
+            document.getElementById('avgFree').textContent = `👥 Media persone libere per giorno: ${avgFree.toFixed(1)}`;
+        }
+
+        function exportToCSV() {
+            let csv = 'Data,Giorno,' + people.join(',') + ',Liberi\n';
+            
+            let currentDate = new Date(startDate);
+            while (currentDate <= endDate) {
+                const dateKey = formatDateKey(currentDate);
+                const dayName = dayNames[currentDate.getDay()];
+                const dateStr = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+                
+                let row = `"${dateStr}","${dayName}"`;
+                
+                people.forEach(person => {
+                    row += ',' + (availability[dateKey][person] ? 'X' : '');
+                });
+                
+                const busyCount = people.reduce((count, person) => {
+                    return count + (availability[dateKey][person] ? 1 : 0);
+                }, 0);
+                const freeCount = people.length - busyCount;
+                row += ',' + freeCount;
+                
+                csv += row + '\n';
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pianificatore_estate_2025.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function printTable() {
+            window.print();
+        }
+
+        // Initialize the table
+        generateTable();
+    </script>
+</body>
+</html>
